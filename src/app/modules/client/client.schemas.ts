@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+/* Client – Create payload                                         */
 const client_create_schema = z.object({
   user_id: z.string({ required_error: "User ID is required." }),
   name: z.string({ required_error: "Name is required." }),
@@ -8,12 +9,10 @@ const client_create_schema = z.object({
   company: z.string().optional().nullable(),
 });
 
-const client_update_schema = z.object({
-  user_id: z.string().optional(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-  phone: z.string().optional(),
-  company: z.string().optional().nullable(),
-});
+/* Client – Update payload (all fields optional)                    */
+const client_update_schema = client_create_schema.partial();
 
-export const client_schemas = { client_create_schema, client_update_schema };
+export const client_schemas = {
+  client_create_schema,
+  client_update_schema,
+};

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { user_routes } from "../modules/user/user.routes";
 import { client_routes } from "../modules/client/client.routes";
+import { project_routes } from "../modules/project/project.routes";
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: "/clients/",
     route: client_routes,
+  },
+  {
+    path: "/projects/",
+    route: project_routes,
   },
 ];
 

@@ -17,7 +17,6 @@ const fetch_all_from_db = async (query: Record<string, unknown>) => {
 
   const where: Prisma.ClientWhereInput = {
     is_deleted: false,
-    // add more dynamic filters here...
   };
 
   const clients = await prisma_client.client.findMany({
