@@ -12,22 +12,48 @@ import { flushCompileCache } from "module";
  * @param query  Arbitrary filter/sort/pagination params from the controller.
  */
 const fetch_all_from_db = async (query: Record<string, unknown>) => {
+  // Basic pagination + soft‑delete guard
   // Example: basic pagination + soft‑delete guard
   const page = Number(query.page) || 1;
-  const perPage = Number(query.limit) || 20;
+  const perPage = Number(query.limit) || 10;
 
-  const where: Prisma.ProjectWhereInput = {
-    is_deleted: false,
-  };
+  const searchFields = ["title"];
+
+  const where = [];
+
+  const searchTerm = query?.searchTerm;
+  if (searchTerm) {
+    where.push({
+      OR: searchFields.map((field) => ({
+        [field]: { contains: searchTerm, mode: "insensitive" },
+      })),
+    });
+  }
+
+  const title = query?.title;
+  const status = query?.status;
+
+  if (title) {
+    where.push({
+      title,
+    });
+  }
+  if (status) {
+    where.push({
+      status,
+    });
+  }
 
   const projects = await prisma_client.project.findMany({
-    where,
+    where: { is_deleted: false, AND: where },
     skip: (page - 1) * perPage,
     take: perPage,
     orderBy: { created_at: "desc" },
   });
 
-  const total = await prisma_client.project.count({ where });
+  const total = await prisma_client.project.count({
+    where: { is_deleted: false, AND: where },
+  });
 
   return { data: projects, meta: { total, page, perPage } };
 };

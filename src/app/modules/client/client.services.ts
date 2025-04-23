@@ -11,22 +11,47 @@ import prisma_client from "../../lib/prisma";
  * @param query  Arbitrary filter/sort/pagination params from the controller.
  */
 const fetch_all_from_db = async (query: Record<string, unknown>) => {
-  // Example: basic pagination + soft‑delete guard
+  // Basic pagination + soft‑delete guard
   const page = Number(query.page) || 1;
-  const perPage = Number(query.limit) || 20;
+  const perPage = Number(query.limit) || 10;
 
-  const where: Prisma.ClientWhereInput = {
-    is_deleted: false,
-  };
+  const searchFields = ["name", "email"];
+
+  const where = [];
+
+  const searchTerm = query?.searchTerm;
+  if (searchTerm) {
+    where.push({
+      OR: searchFields.map((field) => ({
+        [field]: { contains: searchTerm, mode: "insensitive" },
+      })),
+    });
+  }
+
+  const name = query?.name;
+  const email = query?.email;
+
+  if (name) {
+    where.push({
+      name,
+    });
+  }
+  if (email) {
+    where.push({
+      email,
+    });
+  }
 
   const clients = await prisma_client.client.findMany({
-    where,
+    where: { is_deleted: false, AND: where },
     skip: (page - 1) * perPage,
     take: perPage,
     orderBy: { created_at: "desc" },
   });
 
-  const total = await prisma_client.client.count({ where });
+  const total = await prisma_client.client.count({
+    where: { is_deleted: false, AND: where },
+  });
 
   return { data: clients, meta: { total, page, perPage } };
 };
