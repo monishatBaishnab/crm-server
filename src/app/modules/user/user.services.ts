@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { TLoginPayload } from "./user.types";
-import prisma_client from "../../utils/prisma";
+import prisma_client from "../../lib/prisma";
 import bcrypt from "bcrypt";
 import { config } from "../../config";
 import { generate_token } from "../../utils/jwt";
