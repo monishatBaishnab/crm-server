@@ -6,6 +6,7 @@ import global_error from "./app/middlewares/global_error";
 import not_found from "./app/middlewares/not_found";
 import send_response from "./app/utils/send_response";
 import catch_async from "./app/utils/catch_async";
+import { app_routes } from "./app/routes";
 
 // Create an instance of the Express application
 const app: Application = express();
@@ -34,6 +35,8 @@ app.get(
     });
   }),
 );
+
+app.use("/api/v1/", app_routes);
 
 // Middleware to handle 404 (Not Found) errors
 app.use(/.*/, not_found);

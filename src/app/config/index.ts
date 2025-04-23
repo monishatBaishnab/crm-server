@@ -5,4 +5,6 @@ env.config({ path: path.join(process.cwd(), ".env") });
 
 export const config = {
   port: process.env.PORT,
+  bcrypt_salt: process.env.BCRYPT_SALT,
+  jwt_secret: process.env.JWT_SECRET,
 };
