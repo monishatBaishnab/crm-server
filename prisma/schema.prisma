@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String     @id @default(uuid())
+  email      String     @unique
+  name       String
+  password   String
+  theme_pref String?
+  is_deleted Boolean    @default(false)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  clients    Client[]
+  reminders  Reminder[]
+
+  @@map("users")
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+  CANCELED
+}
+
+model Project {
+  id           String        @id @default(uuid())
+  client_id    String
+  client       Client        @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  title        String
+  budget       Decimal
+  deadline     DateTime
+  status       ProjectStatus
+  description  String?
+  is_deleted   Boolean       @default(false)
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  reminders    Reminder[]
+  interactions Interaction[]
+
+  @@map("projects")
+}
+
+model Client {
+  id           String        @id @default(uuid())
+  user_id      String
+  user         User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  name         String
+  email        String        @unique
+  phone        String
+  company      String?
+  is_deleted   Boolean       @default(false)
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  projects     Project[]
+  reminders    Reminder[]
+  interactions Interaction[]
+
+  @@map("clients")
+}
+
+model Reminder {
+  id           String   @id @default(uuid())
+  project_id   String?
+  project      Project? @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  client_id    String?
+  client       Client?  @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  user_id      String
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  title        String
+  due_at       DateTime
+  is_completed Boolean
+  is_deleted   Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@index([user_id, due_at])
+  @@map("reminders")
+}
+
+enum InteractionType {
+  EMAIL
+  MEETING
+  CALL
+}
+
+model Interaction {
+  id          String          @id @default(uuid())
+  project_id  String
+  project     Project         @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  client_id   String
+  client      Client          @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  type        InteractionType
+  occurred_at DateTime
+  notes       String?
+  is_deleted  Boolean         @default(false)
+  created_at  DateTime        @default(now())
+  updated_at  DateTime        @updatedAt
+
+  @@map("interactions")
+}
