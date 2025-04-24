@@ -44,6 +44,10 @@ const fetch_all_from_db = async (
   // Fetch paginated reminders, excluding soft‑deleted rows
   const reminders = await prisma_client.reminder.findMany({
     where: { is_deleted: false, user_id: user.id, AND: where },
+    include: {
+      client: { select: { id: true, name: true, email: true } },
+      project: { select: { id: true, title: true } },
+    },
     skip: (page - 1) * perPage,
     take: perPage,
     orderBy: { created_at: "desc" },

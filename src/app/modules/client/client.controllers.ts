@@ -13,7 +13,7 @@ import { client_services } from "./client.services";
 
 // GET /clients
 const fetch_all = catch_async(async (req, res) => {
-  const result = await client_services.fetch_all_from_db(req.query);
+  const result = await client_services.fetch_all_from_db(req.query, req.user);
 
   send_response(res, {
     message: "Clients fetched successfully.",
@@ -24,7 +24,7 @@ const fetch_all = catch_async(async (req, res) => {
 
 // GET /clients/:id
 const fetch_one = catch_async(async (req, res) => {
-  const result = await client_services.fetch_one_from_db(req.params.id);
+  const result = await client_services.fetch_one_from_db(req.params.id, req.user);
 
   send_response(res, {
     message: "Client fetched successfully.",
