@@ -13,7 +13,6 @@ import { flushCompileCache } from "module";
  */
 const fetch_all_from_db = async (query: Record<string, unknown>) => {
   // Basic pagination + soft‑delete guard
-  // Example: basic pagination + soft‑delete guard
   const page = Number(query.page) || 1;
   const perPage = Number(query.limit) || 10;
 

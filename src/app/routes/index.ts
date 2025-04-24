@@ -2,6 +2,7 @@ import { Router } from "express";
 import { user_routes } from "../modules/user/user.routes";
 import { client_routes } from "../modules/client/client.routes";
 import { project_routes } from "../modules/project/project.routes";
+import { reminder_routes } from "../modules/reminder/reminder.routes";
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/projects/",
     route: project_routes,
+  },
+  {
+    path: "/reminders/",
+    route: reminder_routes,
   },
 ];
 
