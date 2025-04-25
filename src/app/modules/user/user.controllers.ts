@@ -4,6 +4,16 @@ import send_response from "../../utils/send_response";
 import { user_services } from "./user.services";
 import { config } from "../../config";
 
+const fetch_states = catch_async(async (req, res) => {
+  const result = await user_services.fetch_states_from_db(req.user);
+
+  send_response(res, {
+    message: "States fetch successfully.",
+    status: httpStatus.OK,
+    data: result,
+  });
+});
+
 const login = catch_async(async (req, res) => {
   const result = await user_services.login_into_db(req.body);
 
@@ -38,4 +48,4 @@ const register = catch_async(async (req, res) => {
   });
 });
 
-export const user_controllers = { login, register };
+export const user_controllers = { login, register, fetch_states };

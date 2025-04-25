@@ -2,8 +2,11 @@ import { Router } from "express";
 import { user_controllers } from "./user.controllers";
 import validate_req from "../../utils/validate_req";
 import { user_schemas } from "./user.schemas";
+import auth from "../../middlewares/auth";
 
 const router = Router();
+
+router.get("/states", auth, user_controllers.fetch_states);
 
 router.post(
   "/login",

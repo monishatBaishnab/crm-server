@@ -6,7 +6,86 @@ import { config } from "../../config";
 import { generate_token } from "../../utils/jwt";
 import http_error from "../../errors/http_error";
 import httpStatus from "http-status";
+import { JwtPayload } from "jsonwebtoken";
 
+const fetch_states_from_db = async (user: JwtPayload) => {
+  // Count total projects
+  const totalProjects = await prisma_client.project.count({
+    where: { is_deleted: false, client: { user_id: user.id } },
+  });
+
+  // Count projects by status
+  const inProgressCount = await prisma_client.project.count({
+    where: {
+      is_deleted: false,
+      client: { user_id: user.id },
+      status: "IN_PROGRESS",
+    },
+  });
+
+  const onHoldCount = await prisma_client.project.count({
+    where: {
+      is_deleted: false,
+      client: { user_id: user.id },
+      status: "ON_HOLD",
+    },
+  });
+
+  const completedCount = await prisma_client.project.count({
+    where: {
+      is_deleted: false,
+      client: { user_id: user.id },
+      status: "COMPLETED",
+    },
+  });
+
+  const canceledCount = await prisma_client.project.count({
+    where: {
+      is_deleted: false,
+      client: { user_id: user.id },
+      status: "CANCELED",
+    },
+  });
+
+  // Count total clients
+  const totalClients = await prisma_client.client.count({
+    where: { is_deleted: false, user_id: user.id },
+  });
+
+  // Count reminders due soon
+  const remindersDueSoon = await prisma_client.reminder.count({
+    where: {
+      is_deleted: false,
+      user_id: user.id,
+      due_at: {
+        lt: new Date(new Date().setDate(new Date().getDate() + 7)), // Due within 7 days
+      },
+    },
+  });
+
+  // Count total interactions
+  const totalInteractions = await prisma_client.interaction.count({
+    where: { is_deleted: false, user_id: user.id },
+  });
+
+  // Count total reminders
+  const totalReminders = await prisma_client.reminder.count({
+    where: { is_deleted: false, user_id: user.id },
+  });
+
+  // Return the aggregated statistics
+  return {
+    totalClients,
+    totalProjects,
+    totalInteractions,
+    totalReminders,
+    remindersDueSoon,
+    inProgressCount,
+    onHoldCount,
+    completedCount,
+    canceledCount,
+  };
+};
 // Authenticate a user and return a signed JWT.
 const login_into_db = async (payload: TLoginPayload) => {
   // Lookup user by e‑mail (throws 404 if not found)
@@ -58,4 +137,8 @@ const register_into_db = async (payload: User) => {
   return { token };
 };
 
-export const user_services = { login_into_db, register_into_db };
+export const user_services = {
+  login_into_db,
+  register_into_db,
+  fetch_states_from_db,
+};

@@ -86,6 +86,7 @@ const create_one_on_db = async (payload: Client) => {
  * Update an existing client (partial payload).
  */
 const update_one_from_db = async (payload: Partial<Client>, id: string) => {
+  console.log(payload);
   await prisma_client.client.findUniqueOrThrow({
     where: { id, is_deleted: false },
   });

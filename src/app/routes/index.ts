@@ -3,6 +3,7 @@ import { user_routes } from "../modules/user/user.routes";
 import { client_routes } from "../modules/client/client.routes";
 import { project_routes } from "../modules/project/project.routes";
 import { reminder_routes } from "../modules/reminder/reminder.routes";
+import { interaction_routes } from "../modules/interaction/interaction.routes";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/reminders/",
     route: reminder_routes,
+  },
+  {
+    path: "/interactions/",
+    route: interaction_routes,
   },
 ];
 
