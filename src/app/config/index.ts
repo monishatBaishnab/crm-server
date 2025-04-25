@@ -7,4 +7,5 @@ export const config = {
   port: process.env.PORT,
   bcrypt_salt: process.env.BCRYPT_SALT,
   jwt_secret: process.env.JWT_SECRET,
+  node_env: process.env.NODE_ENV,
 };
