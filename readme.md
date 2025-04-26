@@ -1,12 +1,12 @@
 
 
-```markdown
 # 🧠 Mini-CRM for Freelancers
 
 A fullstack TypeScript-based CRM application tailored for freelancers to manage clients, projects, interaction logs, and reminders. Built with a clean, responsive UI and a secure, modular backend.
 
 ---
 
+```markdown
 ## ✨ Tech Stack
 
 ### Frontend
