@@ -1,0 +1,536 @@
+{
+	"info": {
+		"_postman_id": "056f36a9-93c4-4dbd-9e3c-82c6fb86e4b6",
+		"name": "CRM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30811981"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"monishat@gmail.com\",\r\n    \"password\": \"234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Monishat\",\r\n    \"email\": \"monishat@gmail.com\",\r\n    \"password\": \"234\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "states",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/auth/states"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "client",
+			"item": [
+				{
+					"name": "fetch-one",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/clients/e8c24749-2840-49df-b34f-2d9bef62bd6c"
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-url}}/clients",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"clients"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "ariana.gomez@example.com",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Dick",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "email",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"e755db04-5be2-4447-8020-c740ff999e85\",\r\n  \"name\": \"Ariana Gomez\",\r\n  \"email\": \"ariana.gomez@example.com\",\r\n  \"phone\": \"+1‑415‑555‑0123\",\r\n  \"company\": \"Gomez Consulting LLC\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/clients"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ariana Zubed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/clients/e8c24749-2840-49df-b34f-2d9bef62bd6c"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/clients/e8c24749-2840-49df-b34f-2d9bef62bd6c"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project",
+			"item": [
+				{
+					"name": "fetch-one",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/projects/bcdf4bec-cd09-4d88-bf5f-e373cb7b0097"
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-url}}/projects",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"projects"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Mobile Banking App Redesign",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "dir",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "COMPLETED",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"client_id\": \"9d5f95d8-ccd2-4f8b-9ed9-ec03dff22e0c\",\r\n  \"title\": \"Mobile Banking App Redesign\",\r\n  \"budget\": \"125000.00\",\r\n  \"deadline\": \"2025-06-23T00:00:00Z\",\r\n  \"status\": \"IN_PROGRESS\",\r\n  \"description\": \"Redesign the existing mobile banking application for both iOS and Android to improve UX, accessibility, and performance.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/projects/"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deadline\": \"2025-06-23T00:00:00Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/projects/bcdf4bec-cd09-4d88-bf5f-e373cb7b0097"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/projects/30a31ecd-3453-4c70-bf5b-a84786cf57bb"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reminder",
+			"item": [
+				{
+					"name": "fetch-one",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/reminders/c029f265-fac5-478d-9a05-9d07662b7dbd"
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/reminders"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_id\": \"821b3d95-cb8a-48bf-aab5-22394a2584d7\",\r\n    \"client_id\": null,\r\n    \"user_id\": \"e755db04-5be2-4447-8020-c740ff999e85\",\r\n    \"title\": \"Product Infrastructure Designer\",\r\n    \"due_at\": \"2025-04-30T00:00:00.000Z\",\r\n    \"is_completed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/reminders"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/reminders/c029f265-fac5-478d-9a05-9d07662b7dbd"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/reminders/c029f265-fac5-478d-9a05-9d07662b7dbd"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "interactions",
+			"item": [
+				{
+					"name": "fetch-one",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/interactions/75ae5755-d722-4325-94b2-8be8fd4dead3"
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/interactions"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_id\": \"0bb1abed-c9fb-4c08-83a4-2fe78b623f68\",\r\n    \"client_id\": \"70c0b327-ae0f-4db5-8708-139ec487924d\",\r\n    \"user_id\": \"e755db04-5be2-4447-8020-c740ff999e85\",\r\n    \"type\": \"EMAIL\",\r\n    \"occurred_at\": \"2025-01-26T00:00:00.000Z\",\r\n    \"notes\": \"Followed up on the last meeting to confirm the final list of features for the website. Sent over a revised proposal for approval.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/interactions"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"CALL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api-url}}/interactions/75ae5755-d722-4325-94b2-8be8fd4dead3"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{api-url}}/interactions/75ae5755-d722-4325-94b2-8be8fd4dead3"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"value": "",
+			"type": "string"
+		}
+	]
+}
